@@ -1,0 +1,1374 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language hebrew
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "David"
+\font_sans "default" "David"
+\font_typewriter "default" "David"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1cm
+\topmargin 2cm
+\rightmargin 1cm
+\bottommargin 3cm
+\headheight 0cm
+\headsep 0cm
+\footskip 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "20pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\paragraph_spacing double
+\align center
+
+\series bold
+\size huge
+פרום | סיכום חומר
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+שם: עמית בר | ת
+\begin_inset Quotes erd
+\end_inset
+
+ז:
+\lang english
+215462664
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+today
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+מודל מצלמה דיגיטלית
+\end_layout
+
+\begin_layout Standard
+המטריצה המבצעת את הטרנספורמציה מקואורדינטות בעולם האמיתי לקואורדינטות דיגיטליות
+ היא 
+\begin_inset Formula 
+\[
+P'=\left[\begin{matrix}\alpha & 0 & c_{x} & 0\\
+0 & \beta & c_{y} & 0\\
+0 & 0 & 1 & 0
+\end{matrix}\right]P=\left[\begin{matrix}\alpha & 0 & c_{x}\\
+0 & \beta & c_{y}\\
+0 & 0 & 1
+\end{matrix}\right]\left[\begin{matrix}I & 0\end{matrix}\right]P=K\left[\begin{matrix}I & 0\end{matrix}\right]P
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+כאשר 
+\begin_inset Formula 
+\[
+\alpha=fk\frac{x}{z},\beta=fl\frac{y}{z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+כאשר 
+\begin_inset Formula $l,k$
+\end_inset
+
+ הם מהצורה 
+\begin_inset Formula $\frac{pixel}{cm}$
+\end_inset
+
+ וממירים מרחקים בעולם האמיתי לכמות פיקסלים דיגיטלית.
+ 
+\end_layout
+
+\begin_layout Standard
+אנחנו עובדים עם קואורדינטות הומוגניות, כלומר לווקטור האמיתי 
+\begin_inset Formula $\left(v_{1},\ldots,v_{n}\right)$
+\end_inset
+
+ נוסיף
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+1
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ונהפוך אותו אל 
+\begin_inset Formula $\left(v_{1},\ldots,v_{n},1\right)$
+\end_inset
+
+.
+ שוויון ווקטורים מתרחש רק כאשר הקואו' האחרונה היא
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+1
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+כלומר 
+\begin_inset Formula $\left(v_{1},\ldots,v_{n},w\right)$
+\end_inset
+
+ מומר חזרה לווקטור רגיל יהיה 
+\begin_inset Formula $\left(\frac{v_{1}}{w},\ldots,\frac{v_{n}}{w}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+כאשר יש לנו למצלמה סיבוב והזזה נוסיף ייצוג שלהם ונקבל
+\begin_inset Formula 
+\[
+P=\left[\begin{matrix}R & T\\
+0 & 1
+\end{matrix}\right]P_{w}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+וכאשר נכתוב מחדש נקבל
+\begin_inset Formula 
+\[
+P'=K\left[\begin{matrix}R & T\end{matrix}\right]P_{w}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+מודל
+\family roman
+\series bold
+\shape up
+\size large
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+8
+\family roman
+\series bold
+\shape up
+\size large
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+הנקודות
+\end_layout
+
+\begin_layout Standard
+בהינתן
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+8
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+זוגות נקודות המתאימות לאותה נקודה במרחב ב-
+\numeric on
+2
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+תמונות של אותו האובייקט ממצלמות שונות נוכל לחשב את המטריצה הפנדמנטלית שלהן.
+ כאשר נעשה שימוש באלגוריתם זה נרצה לנרמל את הקואורדינטות שלנו מכיוון ש-
+\begin_inset Formula $SVD$
+\end_inset
+
+ עובד טוב יותר על מספרים קטנים.
+\end_layout
+
+\begin_layout Subsection*
+מעבר בין
+\family roman
+\series bold
+\shape up
+\size large
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+2
+\family roman
+\series bold
+\shape up
+\size large
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+תמונות
+\end_layout
+
+\begin_layout Standard
+כאשר אנחנו יודעים את המטריצה הפונדמנטלית 
+\begin_inset Formula $F$
+\end_inset
+
+, מתקיים עליה היחס 
+\begin_inset Formula $p^{T}Fp'=0$
+\end_inset
+
+ כלומר בהינתן הנקודה 
+\begin_inset Formula $p$
+\end_inset
+
+, נוכל למצוא את הקו האפילופרי עליו נמצא 
+\begin_inset Formula $p'$
+\end_inset
+
+, נחשב את משוואת הקו:
+\begin_inset Formula 
+\[
+\begin{pmatrix}x & y & 1\end{pmatrix}\begin{pmatrix}f_{11} & f_{12} & f_{13}\\
+f_{21} & f_{22} & f_{23}\\
+f_{31} & f_{32} & f_{33}
+\end{pmatrix}\begin{pmatrix}x'\\
+y'\\
+1
+\end{pmatrix}=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{pmatrix}xf_{11}+yf_{21}+f_{31} & xf_{12}+yf_{22}+f_{32} & xf_{13}+yf_{23}+f_{33}\end{pmatrix}\begin{pmatrix}x'\\
+y'\\
+1
+\end{pmatrix}=x'\left(xf_{11}+yf_{21}+f_{31}\right)+y'\left(xf_{12}+yf_{22}+f_{32}\right)+xf_{13}+yf_{23}+f_{33}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+כלומר
+\begin_inset Formula 
+\[
+ax'+by'+c=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+עבור 
+\begin_inset Formula $a=xf_{11}+yf_{21}+f_{31}$
+\end_inset
+
+, 
+\begin_inset Formula $b=xf_{12}+yf_{22}+f_{32}$
+\end_inset
+
+, 
+\begin_inset Formula $c=xf_{13}+yf_{23}+f_{33}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+כאשר
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+2
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+המצלמות שלנו מקבילות, החישוב נהייה מאוד פשוט.
+ 
+\begin_inset Formula $R=I,T=\left(T_{x},0,0\right)$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+F=K^{-T}\left[T_{\times}\right]RK'^{-1}=K^{-T}\begin{pmatrix}0 & 0 & 0\\
+0 & 0 & -T_{x}\\
+0 & T_{x} & 0
+\end{pmatrix}K'^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+טריאנגולציה
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename stereo camera.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+בהינתן הנקודות 
+\begin_inset Formula $p,p'$
+\end_inset
+
+ נרצה למצוא את הנקודה 
+\begin_inset Formula $P$
+\end_inset
+
+ במרחב.
+ 
+\end_layout
+
+\begin_layout Subsection*
+קירוב לינארי
+\end_layout
+
+\begin_layout Standard
+נתונות לנו הנקודות 
+\begin_inset Formula $p=MP=(x,y,1)$
+\end_inset
+
+, 
+\begin_inset Formula $p'=M'P=(x',y',1)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+בשביל למצוא את הנקודה נרצה לפתור את המשוואה 
+\begin_inset Formula $AP=0$
+\end_inset
+
+ כאשר 
+\begin_inset Formula 
+\[
+A=\left[\begin{matrix}xM_{3}-M_{1}\\
+yM_{3}-M_{2}\\
+x'M_{3}'-M_{1}'\\
+y'M_{3}'-M_{2}'
+\end{matrix}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+A\begin{pmatrix}x\\
+y\\
+1
+\end{pmatrix}=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+A\left(\begin{pmatrix}x\\
+y\\
+0
+\end{pmatrix}+\begin{pmatrix}0\\
+0\\
+1
+\end{pmatrix}\right)=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+A\begin{pmatrix}x\\
+y\\
+0
+\end{pmatrix}=-A\begin{pmatrix}0\\
+0\\
+1
+\end{pmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+ונוכל למצוא קירוב לינארי אופטימלי לבעייה באמצעות 
+\begin_inset Formula $SVD$
+\end_inset
+
+.
+ כלומר הפתרון הכי טוב הוא
+\begin_inset Formula 
+\[
+\begin{pmatrix}x\\
+y\\
+0
+\end{pmatrix}=-A^{+}A\begin{pmatrix}0\\
+0\\
+1
+\end{pmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+כאשר 
+\begin_inset Formula $A^{+}=VS^{-1}U^{T}$
+\end_inset
+
+ )אלו המטריצות של פירוק 
+\begin_inset Formula $SVD$
+\end_inset
+
+ של 
+\begin_inset Formula $A=USV^{T}$
+\end_inset
+
+( ואז הפתרון הסופי יהיה
+\begin_inset Formula 
+\[
+P=\begin{pmatrix}0\\
+0\\
+1
+\end{pmatrix}\left(I-A^{+}A\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+עם יותר מ
+\numeric on
+2
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+מצלמות נוכל פשוט להוסיף עוד שורות כאילו למטריצה שייתנו לנו עוד תנאים.
+\end_layout
+
+\begin_layout Subsection*
+קירוב לא לינארי
+\end_layout
+
+\begin_layout Standard
+דרך אחרת היא לפתור בעיית אופטימיזציה 
+\begin_inset Formula 
+\[
+\min_{\hat{P}}\lVert M\hat{P}-p\rVert^{2}+\lVert M'\hat{P}-p'\rVert^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+כלומר נרצה שהמרחק בין ההטלה של הנקודה שאנחנו מנחשים 
+\begin_inset Formula $\hat{P}$
+\end_inset
+
+ לבין הנקודה על המסך יהיה מינימלי.
+ עם
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+יותר מצלמות נוכל פשוט להוסיף עוד איברים לסכום.
+\end_layout
+
+\begin_layout Standard
+אם נגדיר 
+\begin_inset Formula $e_{i}=M\hat{P}_{i}-p_{i}$
+\end_inset
+
+ ווקטור 
+\begin_inset Formula $2\times1$
+\end_inset
+
+ אז נוכל להמיר את הבעיה למינימום סכום ריבועים קלאסי ולהשתמש באלגוריתם גאוס-ניוטו
+ן
+\begin_inset Formula 
+\[
+\min_{\hat{P}}\sum_{i}e_{i}(\hat{P})^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+ראשית נשיג הערכה סבירה של 
+\begin_inset Formula $\hat{P}$
+\end_inset
+
+ באמצעות השיטה הלינארית.
+ נרצה לתקן את הניחוש שלנו כל פעם ב-
+\begin_inset Formula $\delta_{P}$
+\end_inset
+
+ קטן.
+ הפתרון הידוע הוא
+\begin_inset Formula 
+\[
+\delta_{P}=-\left(J^{T}J\right)^{-1}J^{T}e
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+e=\left[\begin{matrix}e_{1}\\
+\vdots\\
+e_{n}
+\end{matrix}\right]=\left[\begin{matrix}p_{1}-M_{1}\hat{P}\\
+\vdots\\
+p_{n}-M_{n}\hat{P}
+\end{matrix}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+J=\left[\begin{matrix}\frac{\partial e_{1}}{\partial\hat{P}_{1}} & \frac{\partial e_{1}}{\partial\hat{P}_{2}} & \frac{\partial e_{1}}{\partial\hat{P}_{3}}\\
+\vdots & \vdots & \vdots\\
+\frac{\partial e_{N}}{\partial\hat{P}_{1}} & \frac{\partial e_{N}}{\partial\hat{P}_{2}} & \frac{\partial e_{N}}{\partial\hat{P}_{3}}
+\end{matrix}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial x}\begin{pmatrix}x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}1\\
+0\\
+0
+\end{pmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+כעת כל פעם נזיז קצת את הפתרון שלנו, נחשב את 
+\begin_inset Formula $e\left(\hat{P}+\delta_{P}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+הפתרון לבעיה
+\end_layout
+
+\begin_layout Subsubsection*
+פתרון הבסיס
+\end_layout
+
+\begin_layout Standard
+
+\numeric on
+1
+\numeric off
+.
+ עושים קליברציה ומוצאים את המטריצה של המצלמה של הטלפון
+\end_layout
+
+\begin_layout Standard
+
+\numeric on
+2
+\numeric off
+.
+ נבחר מרחק קבוע בין המצלמות, נמצא את המטריצה הפנדמנטלית בין המצלמות עם אלגוריתם
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+8
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+נקודות )נמצא אותן ידנית פעם אחת(.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\numeric on
+3
+\numeric off
+.
+ עוברים על כל פיקסל באחת התמונות ומשליכים אותו לתמונה השנייה בעזרת 
+\begin_inset Formula $F$
+\end_inset
+
+ ככה מתאימים כל נקודה 
+\begin_inset Formula $p$
+\end_inset
+
+ לקו בתמונה השנייה.
+\end_layout
+
+\begin_layout Standard
+
+\numeric on
+4
+\numeric off
+.
+ רצים על כל הנקודות על הקו, לכל נקודה 
+\begin_inset Formula $p'$
+\end_inset
+
+ מסתכלים על הסביבה שלה ובודקים התאמה לסביבה של 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ לוקחים את הנקודה 
+\begin_inset Formula $p'$
+\end_inset
+
+ עם הסביבה הכי מתאימה וזו הנקודה שלנו.
+\end_layout
+
+\begin_layout Standard
+
+\numeric on
+5
+\numeric off
+.
+ מחשבים את המרחק בין 
+\begin_inset Formula $p,p'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+שיפורים
+\end_layout
+
+\begin_layout Standard
+- בהתאמה בין
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+2
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+נקודות, אפשר לעשות קרוס קורלציה, אפשר לעשות התאמת צבעים, אפשר לבצע אותו
+ תהליך מ-
+\begin_inset Formula $p'$
+\end_inset
+
+ ל-
+\begin_inset Formula $p$
+\end_inset
+
+ בצורה סימטרית ולראות שבאמת יוצאת לנו אותה הנקודה.
+\end_layout
+
+\begin_layout Standard
+- מציאת המטריצה הפנדמנטלית מחדש כל פעם באמצעות התאמת
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+8
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+נקודות אוטומטית עם אלגוריתם 
+\begin_inset Formula $\text{SURF/SIFT}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+- מחשבים את הנקודה במרחב 
+\begin_inset Formula $P$
+\end_inset
+
+ המתאימה לכל זוג נקודות 
+\begin_inset Formula $p,p'$
+\end_inset
+
+ באמצעות טריאנגולציה לינארית ומנרמלים את 
+\begin_inset Formula $P$
+\end_inset
+
+ לפי 
+\begin_inset Formula $z$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+- עושים טריאנגולציה לא לינארית
+\end_layout
+
+\begin_layout Section*
+קישורים
+\end_layout
+
+\begin_layout Standard
+
+\numeric on
+1
+\numeric off
+.
+ פתרון בעיית הריבועים המינימלים ההומוגנית 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://foto.aalto.fi/seura/julkaisut/pjf/pjf_e/2005/Inkila_2005_PJF.pdf"
+literal "false"
+
+\end_inset
+
+ )אפשר לנסות גם עם 
+\begin_inset Formula $Moore-Pseudo-Inverse$
+\end_inset
+
+ ו-
+\begin_inset Formula $Projectors$
+\end_inset
+
+(
+\end_layout
+
+\begin_layout Standard
+
+\numeric on
+2
+\numeric off
+.
+ פתרון רגרסיה לינארית 
+\begin_inset Formula $Ax=b$
+\end_inset
+
+ 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://sthalles.github.io/svd-for-regression/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
