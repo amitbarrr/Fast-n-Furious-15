@@ -703,6 +703,66 @@ F=K^{-T}\left[T_{\times}\right]RK'^{-1}=K^{-T}\begin{pmatrix}0 & 0 & 0\\
 
 \end_layout
 
+\begin_layout Standard
+ובפרט
+\begin_inset Formula 
+\[
+E=\begin{pmatrix}0 & 0 & 0\\
+0 & 0 & -T_{x}\\
+0 & T_{x} & 0
+\end{pmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+ונמצא את הדרישה על הקו
+\begin_inset Formula 
+\[
+\begin{pmatrix}x & y & 1\end{pmatrix}\begin{pmatrix}0 & 0 & 0\\
+0 & 0 & -T_{x}\\
+0 & T_{x} & 0
+\end{pmatrix}\begin{pmatrix}x'\\
+y'\\
+1
+\end{pmatrix}=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{pmatrix}0 & T_{x} & -T_{x}y\end{pmatrix}\begin{pmatrix}x'\\
+y'\\
+1
+\end{pmatrix}=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+T_{x}y'-T_{x}y=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+y'=y
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 טריאנגולציה
 \end_layout
