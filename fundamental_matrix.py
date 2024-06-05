@@ -36,8 +36,8 @@ def get_matches(img1, img2):
         if m.distance < 0.8 * n.distance:
             pts2.append(kp2[m.trainIdx].pt)
         pts1.append(kp1[m.queryIdx].pt)
-
-    return pts1, pts2
+    pts_len = min(len(pts1), len(pts2))
+    return np.array(pts1[:pts_len]), np.array(pts2[:pts_len])
 
 
 def get_fundamental_matrix(img1, img2):
@@ -50,7 +50,6 @@ def get_fundamental_matrix(img1, img2):
     pts1, pts2 = get_matches(img1, img2)
     pts1 = np.int32(pts1)
     pts2 = np.int32(pts2)
-    pts_len = min(len(pts1), len(pts2))
-    F, mask = cv.findFundamentalMat(pts1[:pts_len], pts2[:pts_len], cv.FM_LMEDS)
+    F, mask = cv.findFundamentalMat(pts1, pts2, cv.FM_LMEDS)
     return F, mask
 
