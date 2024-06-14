@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from epipolar_lines import get_parallel_line
 
 
 def sad(point_list: list[tuple], point: tuple, image1: np.array, image2: np.array, size: int):
@@ -22,8 +23,8 @@ def sad(point_list: list[tuple], point: tuple, image1: np.array, image2: np.arra
     min_sad_value = np.inf
     min_sad_pos = (0, 0)
     for position in point_list:
-        x = position[0]
-        y = position[1]
+        x = position[1]
+        y = position[0]
 
         block2 = padded_image2[y:y + 2 * size + 1, x:x + 2 * size + 1]
         sad_val = np.sum(np.abs(block1 - block2))
@@ -40,7 +41,11 @@ if __name__ == "__main__":
     lst1 = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
     point1 = (1, 1)
     point_lst = [(0, 1), (1, 1), (2, 1), (3, 1), (4, 1)]
-    size = 1
+    size = 5
 
-    print(sad(point_lst, point1, lst1, lst2, size))
+    image1 = cv2.imread('images/left_img_in.png', cv2.IMREAD_GRAYSCALE)
+    image2 = cv2.imread('images/right_img_in.png', cv2.IMREAD_GRAYSCALE)
+    line = get_parallel_line((0, 0), range(0, len(image1[0])))
+
+    print(sad([(0, 383)], (0, 0), image1, image2, size))
 
