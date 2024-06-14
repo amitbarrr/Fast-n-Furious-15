@@ -22,13 +22,14 @@ def get_epipolar_line(pixel, F, x_range):
     return np.array(line)
 
 
-def get_parallel_line(pixel, x_range):
+def get_parallel_line(pixel: tuple, x_range: range):
     """
     Get the parallel line to the x-axis
     :param pixel: (x, y)
+    :param x_range: range of x values
     :return: parallel line
     """
-    line = []
-    for x in range(x_range):
-        line.append((pixel[1], x))
-    return np.array(line)
+    y_values = np.full(len(x_range), pixel[1])
+    x_values = np.array(x_range)
+    line = np.c_[y_values, x_values]
+    return line

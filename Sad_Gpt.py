@@ -41,8 +41,8 @@ def template_matching_sad(image, template):
 
 # Example usage:
 # Load the input image and template image in grayscale
-image = cv2.imread('left_img.jpg', cv2.IMREAD_GRAYSCALE)
-template = cv2.imread('left_patch.png', cv2.IMREAD_GRAYSCALE)
+image = cv2.imread('images/left_img.jpg', cv2.IMREAD_GRAYSCALE)
+template = cv2.imread('images/left_patch.png', cv2.IMREAD_GRAYSCALE)
 
 if image is None or template is None:
     print("Error loading images")
