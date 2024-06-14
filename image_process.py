@@ -7,6 +7,9 @@ from epipolar_lines import get_parallel_line
 from sad_final import sad
 
 
+SEARCH_AREA = 100 # in pixels
+
+
 def get_disparity(img1, img2, size):
     """
     Get the disparity map between two images.
@@ -21,12 +24,13 @@ def get_disparity(img1, img2, size):
         print(row)
         for col in range(len(img1[row])):
             pixel = (row, col)
-            line = get_parallel_line(pixel, range(last_x_value, len(img1[row])))
+            sup = col + SEARCH_AREA if col + SEARCH_AREA < len(img1[row]) else len(img1[row])
+            line = get_parallel_line(pixel, range(0, sup))
             matching_pixels = sad(line, pixel, img1, img2, size)
-            if matching_pixels:
+            if len(matching_pixels) > 0:
                 matching_pixel = matching_pixels[0]
                 disparity_map[row][col] = np.abs(pixel[1] - matching_pixel[1])
-                print(disparity_map[row][col], pixel[1], matching_pixel[1])
+                # print(disparity_map[row][col], pixel[1], matching_pixel[1])
                 last_x_value = matching_pixel[1]
     return disparity_map
 
@@ -54,14 +58,15 @@ def draw_distance_map(img1, img2, normalize_factor, size):
     """
     gray_img1 = cv.cvtColor(img1, cv.COLOR_BGR2GRAY)
     gray_img2 = cv.cvtColor(img2, cv.COLOR_BGR2GRAY)
-    disparity_map = get_disparity(gray_img1, gray_img2, size)
-    with open("disparity_map.pkl", "wb") as f:
-        pick = pickle.dumps(disparity_map)
-        f.write(pick)
-    # with open("disparity_map.pkl", "rb") as f:
-    #     disparity_map = pickle.loads(f.read())
+    # disparity_map = get_disparity(gray_img1, gray_img2, size)
+    # with open("disparity_map.pkl", "wb") as f:
+    #     pick = pickle.dumps(disparity_map)
+    #     f.write(pick)
+    with open("disparity_map.pkl", "rb") as f:
+        disparity_map = pickle.loads(f.read())
+    print(disparity_map)
     distance_map = np.array(list(map(lambda x: get_distance(x, normalize_factor), disparity_map)))
     cv.imwrite("distance_map.png", distance_map)
     plt.subplot(121), plt.imshow(img1)
-    plt.subplot(122), plt.imshow(distance_map)
+    plt.subplot(122), plt.imshow(disparity_map, cmap='gray')
     plt.show()
