@@ -48,14 +48,10 @@ def sad(template, image):
     minimum = float('inf')
     for row in range(len(image) - len(template) + 1):
         for col in range(len(image[row]) - len(template[0]) + 1):
-
-
             # Compute the absolute differences
-            absolute_differences = np.abs(image.astype(np.float32) - image1.astype(np.float32))
-
+            absolute_differences = np.abs(image.astype(np.float32) - image.astype(np.float32))
             # Sum the absolute differences
             sad = np.sum(absolute_differences)
-
             if sad < minimum:
                 minimum = sad
 
