@@ -16,12 +16,12 @@ img2 = cv.imread('images/right_img_in.png')  # right image
 
 normalize_factor = (DISTANCE_BETWEEN_CAMERAS * img1.shape[1]) / (2 * np.tan(ANGLE_OF_VIEW / 2))
 print(normalize_factor)
-draw_distance_map(img1, img2, normalize_factor, 31)
+# draw_distance_map(img1, img2, normalize_factor, 31)
 
 # Draw the epipolar lines on the right image and the original point on the left image
 pt = (100, 150)
 line = get_parallel_line(pt, range(50, img1.shape[1]))
-# sad_test(img1, img2, pt, line, 11)
+sad_test(img1, img2, pt, line, 11)
 
 # img1 = cv.cvtColor(img1, cv.COLOR_GRAY2BGR)
 # img2 = cv.cvtColor(img2, cv.COLOR_GRAY2BGR)

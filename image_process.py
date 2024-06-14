@@ -25,7 +25,8 @@ def get_disparity(img1, img2, size):
             matching_pixels = sad(line, pixel, img1, img2, size)
             if matching_pixels:
                 matching_pixel = matching_pixels[0]
-                disparity_map[row][col] = np.abs(pixel[1] - matching_pixel[1])  # TODO: NEED TO CHANGE SAD TO y,x
+                disparity_map[row][col] = np.abs(pixel[1] - matching_pixel[1])
+                print(disparity_map[row][col], pixel[1], matching_pixel[1])
                 last_x_value = matching_pixel[1]
     return disparity_map
 

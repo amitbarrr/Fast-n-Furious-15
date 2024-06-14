@@ -20,7 +20,7 @@ def sad(point_list: list[tuple], point: tuple, image1: np.array, image2: np.arra
         return None
     # Create
     padded_image1 = np.pad(image1, size, mode='constant', constant_values=0)
-    block1 = padded_image1[point[1]:point[1] + 2 * size + 1, point[0]: point[0] + 2 * size + 1]
+    block1 = padded_image1[point[0]:point[0] + 2 * size + 1, point[1]: point[1] + 2 * size + 1]
     padded_image2 = np.pad(image2, size, mode='constant', constant_values=0)
 
     min_sad_value = np.inf
