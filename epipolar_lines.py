@@ -31,5 +31,5 @@ def get_parallel_line(pixel: tuple, x_range: range):
     """
     y_values = np.full(len(x_range), pixel[1])
     x_values = np.array(x_range)
-    line = np.c_[y_values, x_values]
+    line = np.rec.fromarrays([y_values, x_values])
     return line
