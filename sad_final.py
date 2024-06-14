@@ -13,7 +13,7 @@ def sad(point_list: list[tuple], point: tuple, image1: np.array, image2: np.arra
     :param size: the size of neighborhood in which we are looking
     :return: the position (tuple) of the best match
     """
-    if point[0] > len(image1[0]) or point[1] > len(image1):
+    if point[0] > len(image1) or point[1] > len(image1[0]):
         return None
 
     padded_image1 = np.pad(image1, size, mode='constant', constant_values=0)
@@ -47,5 +47,5 @@ if __name__ == "__main__":
     image2 = cv2.imread('images/right_img_in.png', cv2.IMREAD_GRAYSCALE)
     line = get_parallel_line((0, 0), range(0, len(image1[0])))
 
-    print(sad([(0, 383)], (0, 0), image1, image2, size))
+    print(sad(line, (0, 0), image1, image2, size))
 
