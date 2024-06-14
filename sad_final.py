@@ -13,27 +13,34 @@ def sad(point_list: list[tuple], point: tuple, image1: np.array, image2: np.arra
     :param size: the size of neighborhood in which we are looking
     :return: the position (tuple) of the best match
     """
+    # Check for edge cases
     if point[0] > len(image1) or point[1] > len(image1[0]):
         return None
 
+    # Create
     padded_image1 = np.pad(image1, size, mode='constant', constant_values=0)
     block1 = padded_image1[point[1]:point[1] + 2 * size + 1, point[0]: point[0] + 2 * size + 1]
     padded_image2 = np.pad(image2, size, mode='constant', constant_values=0)
 
     min_sad_value = np.inf
-    min_sad_pos = (0, 0)
+    sad_lst = []
+    # Run on all Points in the list
     for position in point_list:
-        x = position[1]
-        y = position[0]
-
-        block2 = padded_image2[y:y + 2 * size + 1, x:x + 2 * size + 1]
+        # Create new neighborhood
+        block2 = padded_image2[position[0]:position[0] + 2 * size + 1, position[1]:position[1] + 2 * size + 1]
         sad_val = np.sum(np.abs(block1 - block2))
 
-        if sad_val < min_sad_value:
-            min_sad_value = sad_val
-            min_sad_pos = (x, y)
+        if len(sad_lst) < 5:
+            sad_lst.append((position[0], position[1], sad_val))
+            sad_lst.sort(key=lambda x: x[2])
+            min_sad_value = sad_lst[:-1]
+        elif sad_val < min_sad_value:
+            sad_lst.append((position[0], position[1], sad_val))
+            sad_lst.sort(key=lambda x: x[2])
+            min_sad_value = sad_lst[:-1]
+            sad_lst.pop(0)
 
-    return min_sad_pos
+    return sad_lst
 
 
 if __name__ == "__main__":
