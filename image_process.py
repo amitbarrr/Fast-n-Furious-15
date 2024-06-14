@@ -22,9 +22,11 @@ def get_disparity(img1, img2, size):
         for col in range(len(img1[row])):
             pixel = (row, col)
             line = get_parallel_line(pixel, range(last_x_value, len(img1[row])))
-            matching_pixel = sad(line, pixel, img1, img2, size)
-            disparity_map[row][col] = np.abs(pixel[0] - matching_pixel[0])
-            last_x_value = matching_pixel[0]
+            matching_pixels = sad(line, pixel, img1, img2, size)
+            if matching_pixels:
+                matching_pixel = matching_pixels[0]
+                disparity_map[row][col] = np.abs(pixel[1] - matching_pixel[1])  # TODO: NEED TO CHANGE SAD TO y,x
+                last_x_value = matching_pixel[1]
     return disparity_map
 
 
@@ -58,12 +60,7 @@ def draw_distance_map(img1, img2, normalize_factor, size):
     # with open("disparity_map.pkl", "rb") as f:
     #     disparity_map = pickle.loads(f.read())
     distance_map = np.array(list(map(lambda x: get_distance(x, normalize_factor), disparity_map)))
-    # distance_img = np.hstack((img1, distance_map))
-    # distance_img = np.concatenate((img1, distance_map), axis=1)
     cv.imwrite("distance_map.png", distance_map)
-    # cv.imshow("Original Image", img1)
-    # cv.imshow("Distance Of Objects", distance_map)
-    # cv.imshow("Distance Of Objects In Image", distance_img)
     plt.subplot(121), plt.imshow(img1)
     plt.subplot(122), plt.imshow(distance_map)
     plt.show()

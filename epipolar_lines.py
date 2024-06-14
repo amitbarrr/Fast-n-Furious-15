@@ -29,7 +29,7 @@ def get_parallel_line(pixel: tuple, x_range: range):
     :param x_range: range of x values
     :return: parallel line
     """
-    y_values = np.full(len(x_range), pixel[1])
+    y_values = np.full(len(x_range), pixel[0])
     x_values = np.array(x_range)
     line = np.rec.fromarrays([y_values, x_values])
     return line
