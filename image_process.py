@@ -47,6 +47,32 @@ def get_distance(disparity, normalize_factor):
     return normalize_factor / disparity
 
 
+def cross_reference(image1, image2, line: list, five_points: list, point: tuple, size: int) -> tuple:
+    """
+
+    :param image1: image which is the origin of the five points
+    :param image2: image which is the origin of the single point.
+    :param line: the line in which the points reside
+    :param five_points: the five best matches for the points using sad
+    :param point:
+    :return: best matching point
+    """
+    minimum = np.inf
+    min_index = 0
+
+    for match_point in five_points:
+        checked_points = sad(line, match_point, image1, image2, size)
+
+        difference = np.linalg.norm(checked_points - point, axis=1)
+        best_match = np.min(difference)
+
+        if best_match < minimum:
+            minimum = best_match
+            min_index = np.argmin(difference)
+
+    return five_points[min_index]
+
+
 def draw_distance_map(img1, img2, normalize_factor, size):
     """
     Draw the distance map of objects in the scene.
