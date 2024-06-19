@@ -12,8 +12,8 @@ DISTANCE_FROM_CAMERA = 1 # of the object from the camera in meters
 RULER_SIZE = 1 # in meters
 ANGLE_OF_VIEW = np.arctan(RULER_SIZE / (2 * DISTANCE_FROM_CAMERA))
 
-img1 = cv.imread('images/left_img_in.png')  # left image
-img2 = cv.imread('images/right_img_in.png')  # right image
+img1 = cv.imread('images/left_img.jpg')  # left image
+img2 = cv.imread('images/right_img.jpg')  # right image
 
 normalize_factor = (DISTANCE_BETWEEN_CAMERAS * img1.shape[1]) / (2 * np.tan(ANGLE_OF_VIEW / 2))
 # print(normalize_factor)
