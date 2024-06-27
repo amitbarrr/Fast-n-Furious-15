@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from image_process import *
-from sad_final import sad_test
+from sad_final import *
 
 WINDOW_SIZE = 9  # Size of the window to search for the best match in the SAD algorithm
 
@@ -12,34 +12,26 @@ DISTANCE_FROM_CAMERA = 1 # of the object from the camera in meters
 RULER_SIZE = 1 # in meters
 ANGLE_OF_VIEW = np.arctan(RULER_SIZE / (2 * DISTANCE_FROM_CAMERA))
 
-img1 = cv.imread('images/left_img.jpg')  # left image
-img2 = cv.imread('images/right_img.jpg')  # right image
+img1 = cv.imread('images/left_img2.jpg')  # left image
+img2 = cv.imread('images/right_img2.jpg')  # right image
+
+img1 = img1[200:900, 300:1000]
+img2 = img2[200:900, 300:1000]
 
 normalize_factor = (DISTANCE_BETWEEN_CAMERAS * img1.shape[1]) / (2 * np.tan(ANGLE_OF_VIEW / 2))
 # print(normalize_factor)
-draw_distance_map(img1, img2, normalize_factor, WINDOW_SIZE)
+draw_distance_map(img1, img2, 9, normalize_factor=normalize_factor, cost="sad", alg="average", write=True)
 
 # Draw the epipolar lines on the right image and the original point on the left image
-pixel = (200, 210)
-line = get_parallel_line(pixel, range(30, 250))
-# sad_test(img1, img2, pixel, line, 9)
-
-# img3 = img1
-# img4 = img2
-# img1 = cv.circle(img1, (pixel[1], pixel[0]), 3, (255, 0, 0), -1)
-# matching_pixels = sad(line, pixel, img1, img2, WINDOW_SIZE)
-# print(matching_pixels)
-# for i, matching_pixel in enumerate(matching_pixels):
-#     img2 = cv.circle(img2, (matching_pixel[1], matching_pixel[0]), 3, (255, i * 45, i * 45), -1)
-#
-# match = matching_pixels[0]
-# match_line = get_parallel_line(match, range(0, 250))
-# img3 = cv.circle(img3, (pixel[1], pixel[0]), 3, (255, 0, 0), -1)
-# matching_pixels = sad(line, pixel, img3, img4, WINDOW_SIZE)
-# print(matching_pixels)
-# for i, matching_pixel in enumerate(matching_pixels):
-#     img2 = cv.circle(img2, (matching_pixel[1], matching_pixel[0]), 3, (255, i * 45, i * 45), -1)
-#
-# plt.subplot(121), plt.imshow(img1)
-# plt.subplot(122), plt.imshow(img2)
+# pixel = (100, 250)
+# x_values = range(30, len(img1[0])-9)
+# line = get_parallel_line(pixel, x_values)
+# sad_test(img1, img2, pixel, line, 15)
+# vals, points = sad(line, pixel, img1, img2, 15)
+# print(points, points[:, 1])
+# plt.plot(x_values, vals)
+# marker_vals = [vals[p-30] for p in points[:, 1]]
+# print(marker_vals, points[:, 1])
+# plt.scatter(points[:, 1], marker_vals, color='red', zorder=5)
 # plt.show()
+# average_sad_test(img1, img2, pixel, 13, 31, 25, "ssd")

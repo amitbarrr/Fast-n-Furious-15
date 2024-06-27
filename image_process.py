@@ -3,39 +3,61 @@ import cv2 as cv
 from matplotlib import pyplot as plt
 import pickle
 
-from epipolar_lines import get_parallel_line
-from sad_final import sad
+from sad_final import *
+
 
 SEARCH_AREA = 100  # How many pixels away from the current pixel to search
 OFFSET = 30  # How many pixels at the start of the image to ignore
 
 
-def get_disparity(img1, img2, size):
+def get_disparity(img1, img2, size, cost):
     """
     Get the disparity map between two images.
     :param img1: left image. cv grayscale image
     :param img2: right image. cv grayscale image
     :param size: size of the neighborhood to search
+    :param cost: the cost algorithm to use. sad or ssd
     :return: disparity map
     """
-    last_x_value = max(size, OFFSET)
     disparity_map = np.zeros(img1.shape)
+    blacklist = set()
 
-    for row in range(size, len(img1) - size):
+    window_size = int(size/2)
+
+    for row in range(window_size, len(img1) - window_size):
         print(row)
-        for col in range(size, len(img1[row]) - size):
+        for col in range(window_size, len(img1[row]) - window_size):
             pixel = (row, col)
-            sup = col + SEARCH_AREA if col + SEARCH_AREA < len(img1[row]) - size else len(img1[row]) - size - 1
-            line = get_parallel_line(pixel, range(last_x_value, sup))
-            matching_pixels = sad(line, pixel, img1, img2, size)
-            best_match = cross_reference(img2, img1, line, matching_pixels, pixel, size)
-
+            sup = col + SEARCH_AREA if col + SEARCH_AREA < len(img1[row]) - window_size else len(img1[row]) - window_size - 1
+            starting_point = max(OFFSET, col)
+            line = get_parallel_line(pixel, range(starting_point, sup))
+            matching_pixels = sad(line, pixel, img1, img2, size, blacklist=blacklist, cost=cost)
+            # best_match = cross_reference(img1, img2, matching_pixels, pixel, size, cost=cost)
+            best_match = 0
             if len(matching_pixels) > 0:
                 matching_pixel = matching_pixels[best_match]
                 disparity_map[row][col] = np.abs(pixel[1] - matching_pixel[1])
-                # print(disparity_map[row][col], pixel[1], matching_pixel[1])
-                # last_x_value = max(OFFSET, matching_pixel[-1])
+                # blacklist.add(tuple(matching_pixel))
+    return disparity_map
 
+
+def get_average_disparity(img1, img2, size, search_window: int = 100, threshold: int = 20, algorithm: str = "sad"):
+    """
+        Get the disparity map between two images.
+        :param img1: left image. cv grayscale image
+        :param img2: right image. cv grayscale image
+        :param size: size of the neighborhood to search
+        :return: disparity map
+        """
+    window_size = int(size / 2)
+
+    disparity_map = np.zeros(img1.shape)
+    for row in range(size, len(img1) - window_size):
+        print(row)
+        for col in range(size, len(img1[row]) - window_size):
+            pixel = (row, col)
+            matching_pixel = average_sad(pixel, img1, img2, window_size, search_window, threshold, algorithm)
+            disparity_map[row][col] = np.abs(pixel[1] - matching_pixel[1])
     return disparity_map
 
 
@@ -49,24 +71,31 @@ def get_distance(disparity, normalize_factor):
     return np.divide(normalize_factor, disparity, out=np.zeros_like(disparity), where=disparity != 0)
 
 
-def cross_reference(image1, image2, line: list, five_points: list, point: tuple, size: int) -> int:
+def cross_reference(image1, image2, five_points: list, point: tuple, size: int, search_range: int = 20, cost = "sad") -> int:
     """
-
+    Gets five points in image2 matching to a point in image1, matches them back to image1 and returns the best match
     :param image1: image which is the origin of the five points
     :param image2: image which is the origin of the single point.
-    :param line: the line in which the points reside
     :param five_points: the five best matches for the points using sad
-    :param point:
+    :param point: the point in image1 to match to
+    :param size: size of the neighborhood to search
+    :param search_range: how far to search for the best match
+    :param cost: the cost algorithm to use. sad or ssd
     :return: best matching point
     """
     minimum = np.inf
     min_index = 0
 
-    for i in range(len(five_points)):
-        low = max(0, i - 20)
-        high = min(len(line) - 1, i + 20)
-        # print(line, point, line[low: high])
-        checked_points = sad(line[low: high], five_points[i], image1, image2, size)
+    window_size = int(size/2)
+
+    for p in five_points:
+        y, x = p
+        if y == x == 0:
+            continue
+        low = max(window_size, x - search_range)
+        high = min(len(image1[0]) - window_size, x + search_range)
+        line = get_parallel_line(point, range(low, high))
+        checked_points = sad(line, p, image2, image1, size, cost=cost)
 
         difference = np.linalg.norm(checked_points - point, axis=1)
         best_match = np.min(difference)
@@ -78,27 +107,39 @@ def cross_reference(image1, image2, line: list, five_points: list, point: tuple,
     return min_index
 
 
-def draw_distance_map(img1, img2, normalize_factor, size):
+def draw_distance_map(img1, img2, size, normalize_factor=100, alg="regular", cost="sad", write=True):
     """
     Draw the distance map of objects in the scene.
     :param img1: left image. opencv image
     :param img2: right image. opencv image
     :param normalize_factor: normalize factor calculated by trigonometry
     :param size: size of the neighborhood to search
+    :param alg: algorithm to use. regular or average
+    :param cost: the cost algorithm to use. sad or ssd
+    :param write: write the disparity map to a file
     :return: None
     """
     gray_img1 = cv.cvtColor(img1, cv.COLOR_BGR2GRAY)
     gray_img2 = cv.cvtColor(img2, cv.COLOR_BGR2GRAY)
-    disparity_map = get_disparity(gray_img1, gray_img2, size)
-    with open("disparity_map.pkl", "wb") as f:
-        pick = pickle.dumps(disparity_map)
-        f.write(pick)
-    # with open("disparity_map.pkl", "rb") as f:
-    #     disparity_map = pickle.loads(f.read())
-    # print(disparity_map)
-    # distance_map = np.array(list(map(lambda x: get_distance(x, normalize_factor), disparity_map)))
-    # distance_map = get_distance(disparity_map, 1000)
-    # cv.imwrite("distance_map.png", distance_map)
+    if alg == "regular":
+        disparity_map = get_disparity(gray_img1, gray_img2, size, cost)
+    elif alg == "average":
+        disparity_map = get_average_disparity(gray_img1, gray_img2, size, 30, 20, cost)
+    else:
+        print("Invalid Algorithm")
+        return
+
+    if write:
+        with open("disparity_map.pkl", "wb") as f:
+            pick = pickle.dumps(disparity_map)
+            f.write(pick)
+    else:
+        with open("disparity_map.pkl", "rb") as f:
+            disparity_map = pickle.loads(f.read())
+
+    distance_map = get_distance(disparity_map, normalize_factor)
+    cv.imwrite("distance_map.png", distance_map)
     plt.subplot(121), plt.imshow(img1)
+    # plt.subplot(122), plt.imshow(distance_map, cmap='gray_r')
     plt.subplot(122), plt.imshow(disparity_map, cmap='gray_r')
     plt.show()
