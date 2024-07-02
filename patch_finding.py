@@ -126,14 +126,14 @@ def get_patch_in_image(image: SingleChannelImage, x: int, y: int, height: int, w
     return patch
 
 
-def get_best_match(image: SingleChannelImage, patch: SingleChannelImage, center: int) -> tuple:
+def get_best_match(image: SingleChannelImage, patch: SingleChannelImage, center: tuple) -> tuple:
     """
     Finds the best match for a given patch within an image using mean square error.
 
     Args:
         image (SingleChannelImage): The input image.
         patch (SingleChannelImage): The patch to be matched.
-        center (int): The pixel of the center of the patch in the image.
+        center (tuple): The pixel of the center of the patch in the image.
 
     Returns:
         tuple: A tuple containing the coordinates of the best match and the corresponding mean square error.
@@ -189,7 +189,7 @@ def find_patch_in_img(image, patch, center) -> list[tuple]:
     Args:
         image (SingleChannelImage): The input image.
         patch (SingleChannelImage): The patch to be located.
-        center (int): The pixel of the center of the patch in the image
+        center (tuple): The pixel of the center of the patch in the image
 
     Returns:
         dict: A dictionary containing rotation angles as keys and corresponding best match coordinates and

@@ -1,43 +1,56 @@
-import numpy as np
-import cv2 as cv
-from matplotlib import pyplot as plt
 import pickle
+from tqdm import tqdm
 
 from sad_final import *
-from patch_finding import find_patch_in_img
+from patch_finding import get_best_match
 
-# SEARCH_AREA = 100  # How many pixels away from the current pixel to search
-OFFSET = 30  # How many pixels at the start of the image to ignore
+SEARCH_AREA = 64  # How many pixels away from the current pixel to search
+LEFT_RIGHT_FAIL_THRESHOLD = 10  # How many pixels away from the current pixel to search
 
 
-def get_disparity(img1, img2, size, cost):
+def get_image_disparity(img1, img2, size, cost, position="r"):
     """
     Get the disparity map between two images.
     :param img1: left image. cv grayscale image
     :param img2: right image. cv grayscale image
     :param size: size of the neighborhood to search
     :param cost: the cost algorithm to use. sad or ssd
+    :param position: is img1 the left of the right image
+    :return: disparity map
+    """
+    other_position = "l" if position == "r" else "r"
+    dir = 1 if position == "r" else -1
+
+    pos_disparity_map = get_disparity_map(img1, img2, size, cost, position=position)
+    other_disparity_map = get_disparity_map(img2, img1, size, cost, position=other_position)
+
+    for row in range(1, len(pos_disparity_map)-1):
+        for col in range(1, len(pos_disparity_map[row])-1):
+            pos_disparity = pos_disparity_map[row, col]
+            if np.abs(pos_disparity - other_disparity_map[row, int(col + dir * pos_disparity)]) > LEFT_RIGHT_FAIL_THRESHOLD:
+                pos_disparity_map[row, col] = np.mean(
+                    pos_disparity_map[row-1:row+2, col-1:col+2] * np.array([[1, 1, 1], [1, 0, 1], [1, 1, 1]]))
+    return pos_disparity_map
+
+def get_disparity_map(img1, img2, size, cost, position="r"):
+    """
+    Get the disparity map between two images.
+    :param img1: left image. cv grayscale image
+    :param img2: right image. cv grayscale image
+    :param size: size of the neighborhood to search
+    :param cost: the cost algorithm to use. sad or ssd
+    :param position: is img1 the left of the right image
     :return: disparity map
     """
     disparity_map = np.zeros(img1.shape)
-    blacklist = set()
-
     window_size = int(size/2)
 
     for row in range(window_size, len(img1) - window_size):
         print("Line: ", row)
         for col in range(window_size, len(img1[row]) - window_size):
             pixel = (row, col)
-            sup = col + SEARCH_AREA if col + SEARCH_AREA < len(img1[row]) - window_size else len(img1[row]) - window_size - 1
-            starting_point = max(OFFSET, col)
-            line = get_parallel_line(pixel, range(starting_point, sup))
-            matching_pixels = sad(line, pixel, img1, img2, size, blacklist=blacklist, cost=cost)
-            # best_match = cross_reference(img1, img2, matching_pixels, pixel, size, cost=cost)
-            best_match = 0
-            if len(matching_pixels) > 0:
-                matching_pixel = matching_pixels[best_match]
-                disparity_map[row, col] = np.abs(pixel[1] - matching_pixel[1])
-                # blacklist.add(tuple(matching_pixel))
+            matching_pixel = sad(pixel, img1, img2, SEARCH_AREA, size, position="r", cost=cost)
+            disparity_map[row, col] = np.abs(pixel[1] - matching_pixel[1])
     return disparity_map
 
 
@@ -47,75 +60,19 @@ def get_block_disparity(img1, img2, size):
     :param img1: left image. cv grayscale image
     :param img2: right image. cv grayscale image
     :param size: size of the blocks to search
-    :param cost: the cost algorithm to use. sad or ssd
     :return:
     """
     window_size = int(size/2)
     disparity_map = np.zeros(img1.shape)
+    progress_bar = tqdm(total=len(range(window_size, len(img1) - window_size, 2 * window_size)))
 
     for row in range(window_size, len(img1) - window_size, 2 * window_size):
-        print("Line: ", row)
+        progress_bar.update(1)
         for col in range(window_size, len(img1[row]) - window_size, 2 * window_size):
             pixel = (row, col)
             block = img1[row - window_size:row + window_size, col - window_size:col + window_size]
-            matching_pixel = find_patch_in_img(img2, block, pixel)[-1][0]
+            matching_pixel = get_best_match(img2, block, pixel)[0]
             disparity_map[row - window_size:row + window_size, col - window_size:col + window_size] = np.abs(pixel[1] - matching_pixel[1])
-    return disparity_map
-
-
-def get_average_block_disparity(img1, img2, size, cost):
-    """
-    Get the disparity map between two images.
-    :param img1: left image. cv grayscale image
-    :param img2: right image. cv grayscale image
-    :param size: size of the neighborhood to search
-    :param cost: the cost algorithm to use. sad or ssd
-    :return: disparity map
-    """
-    disparity_map = np.zeros(img1.shape)
-    blacklist = set()
-
-    window_size = int(size/2)
-
-    for row in range(2 * window_size, len(img1) - 2 * window_size, 2 * window_size):
-        print("Line: ", row)
-        for col in range(2 * window_size, len(img1[row]) - 2 * window_size, 2 * window_size):
-            block_disparity = 0
-            block_size = size ** 2
-            for r_offset in range(-window_size, window_size):
-                for c_offset in range(-window_size, window_size):
-                    pixel = (row + r_offset, col + c_offset)
-                    # sup = col + SEARCH_AREA if col + SEARCH_AREA < len(img1[row]) - window_size else len(img1[row]) - window_size - 1
-                    sup = len(img1[row]) - window_size - 1
-                    starting_point = max(OFFSET, col)
-                    line = get_parallel_line(pixel, range(starting_point, sup))
-                    matching_pixels = sad(line, pixel, img1, img2, size, cost=cost)
-                    best_match = 0
-                    if len(matching_pixels) > 0:
-                        matching_pixel = matching_pixels[best_match]
-                        block_disparity += np.abs(pixel[1] - matching_pixel[1])
-            average_block_disparity = block_disparity / block_size
-            disparity_map[row - window_size:row + window_size, col - window_size:col + window_size] = average_block_disparity
-    return disparity_map
-
-
-def get_average_disparity(img1, img2, size, search_window: int = 100, threshold: int = 20, algorithm: str = "sad"):
-    """
-        Get the disparity map between two images.
-        :param img1: left image. cv grayscale image
-        :param img2: right image. cv grayscale image
-        :param size: size of the neighborhood to search
-        :return: disparity map
-        """
-    window_size = int(size / 2)
-
-    disparity_map = np.zeros(img1.shape)
-    for row in range(size, len(img1) - window_size):
-        print(row)
-        for col in range(size, len(img1[row]) - window_size):
-            pixel = (row, col)
-            matching_pixel = average_sad(pixel, img1, img2, window_size, search_window, threshold, algorithm)
-            disparity_map[row][col] = np.abs(pixel[1] - matching_pixel[1])
     return disparity_map
 
 
@@ -182,13 +139,11 @@ def draw_distance_map(img1, img2, size, normalize_factor=100, alg="regular", cos
 
     if write:
         if alg == "regular":
-            disparity_map = get_disparity(gray_img1, gray_img2, size, cost)
-        elif alg == "average":
-            disparity_map = get_average_disparity(gray_img1, gray_img2, size, 30, 20, cost)
+            disparity_map = get_disparity_map(gray_img1, gray_img2, size, cost)
+        elif alg == "leftright":
+            disparity_map = get_image_disparity(gray_img1, gray_img2, size, cost)
         elif alg == "block":
             disparity_map = get_block_disparity(gray_img1, gray_img2, size)
-        elif alg == "average_block":
-            disparity_map = get_average_block_disparity(gray_img1, gray_img2, size, cost)
         else:
             print("Invalid Algorithm")
             return
@@ -199,13 +154,12 @@ def draw_distance_map(img1, img2, size, normalize_factor=100, alg="regular", cos
         with open("disparity_map.pkl", "rb") as f:
             disparity_map = pickle.loads(f.read())
 
-    distance_map = get_distance(disparity_map, normalize_factor)
-    cv.imwrite("distance_map.png", distance_map)
+    disparity_map = cv.normalize(disparity_map, disparity_map, 0, 255, norm_type=cv.NORM_MINMAX)
+    disparity_map = np.uint8(disparity_map)
+    distance_map = get_distance(np.float64(disparity_map), normalize_factor)
     plt.title(f"Size {size}")
-    plt.subplot(121), plt.imshow(img1)
-    if disp:
-        plt.subplot(122), plt.imshow(disparity_map, cmap='gray_r')
-    else:
-        plt.subplot(122), plt.imshow(distance_map, cmap='gray_r')
-
-    plt.show()
+    cv.imshow("Right", img1)
+    cv.imshow("Left", img2)
+    cv.imshow("disparity", disparity_map)
+    cv.imshow("distance", distance_map)
+    cv.waitKey(0)
