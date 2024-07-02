@@ -109,8 +109,7 @@ def cross_reference(image1, image2, five_points: list, point: tuple, size: int, 
             continue
         low = max(window_size, x - search_range)
         high = min(len(image1[0]) - window_size, x + search_range)
-        line = get_parallel_line(point, range(low, high))
-        checked_points = sad(line, p, image2, image1, size, cost=cost)
+        checked_points = sad(p, image2, image1, high-low, size, cost=cost)
 
         difference = np.linalg.norm(checked_points - point, axis=1)
         best_match = np.min(difference)
@@ -157,6 +156,9 @@ def draw_distance_map(img1, img2, size, normalize_factor=100, alg="regular", cos
     disparity_map = cv.normalize(disparity_map, disparity_map, 0, 255, norm_type=cv.NORM_MINMAX)
     disparity_map = np.uint8(disparity_map)
     distance_map = get_distance(np.float64(disparity_map), normalize_factor)
+    distance_map = cv.normalize(distance_map, distance_map, 0, 255, norm_type=cv.NORM_MINMAX)
+    distance_map = np.uint8(distance_map)
+    distance_map = cv.applyColorMap(distance_map, cv.COLORMAP_JET)
     plt.title(f"Size {size}")
     cv.imshow("Right", img1)
     cv.imshow("Left", img2)

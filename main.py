@@ -1,10 +1,3 @@
-import threading
-
-import cv2 as cv
-import numpy as np
-from matplotlib import pyplot as plt
-from concurrent.futures import ThreadPoolExecutor, as_completed
-
 from image_process import *
 from sad_final import *
 
@@ -14,7 +7,7 @@ DISTANCE_FROM_CAMERA = 1 # of the object from the camera in meters
 RULER_SIZE = 1 # in meters
 ANGLE_OF_VIEW = np.arctan(RULER_SIZE / (2 * DISTANCE_FROM_CAMERA))
 
-IMAGE = 3
+IMAGE = 1
 
 img1 = cv.imread(f'images/right_img{IMAGE}.jpg')  # right image
 img2 = cv.imread(f'images/left_img{IMAGE}.jpg')  # left image
@@ -33,7 +26,7 @@ if IMAGE == 2:
 normalize_factor = 1
 # print(normalize_factor)
 
-draw_distance_map(img1, img2, 9, normalize_factor=normalize_factor, cost="ssd", alg="regular", write=False, disp=True)
+draw_distance_map(img1, img2, 11, normalize_factor=normalize_factor, cost="ssd", alg="regular", write=True, disp=True)
 
 # Draw the epipolar lines on the right image and the original point on the left image
 # pixel = (70, 80)
