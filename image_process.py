@@ -77,9 +77,9 @@ def get_average_block_disparity(img1, img2, size, cost):
 
     window_size = int(size/2)
 
-    for row in range(window_size, len(img1) - window_size, 2 * window_size):
+    for row in range(2 * window_size, len(img1) - 2 * window_size, 2 * window_size):
         print("Line: ", row)
-        for col in range(window_size, len(img1[row]) - window_size, 2 * window_size):
+        for col in range(2 * window_size, len(img1[row]) - 2 * window_size, 2 * window_size):
             block_disparity = 0
             block_size = size ** 2
             for r_offset in range(-window_size, window_size):
@@ -89,7 +89,7 @@ def get_average_block_disparity(img1, img2, size, cost):
                     sup = len(img1[row]) - window_size - 1
                     starting_point = max(OFFSET, col)
                     line = get_parallel_line(pixel, range(starting_point, sup))
-                    matching_pixels = sad(line, pixel, img1, img2, size, blacklist=blacklist, cost=cost)
+                    matching_pixels = sad(line, pixel, img1, img2, size, cost=cost)
                     best_match = 0
                     if len(matching_pixels) > 0:
                         matching_pixel = matching_pixels[best_match]
@@ -117,6 +117,7 @@ def get_average_disparity(img1, img2, size, search_window: int = 100, threshold:
             matching_pixel = average_sad(pixel, img1, img2, window_size, search_window, threshold, algorithm)
             disparity_map[row][col] = np.abs(pixel[1] - matching_pixel[1])
     return disparity_map
+
 
 def get_distance(disparity, normalize_factor):
     """
@@ -186,6 +187,8 @@ def draw_distance_map(img1, img2, size, normalize_factor=100, alg="regular", cos
             disparity_map = get_average_disparity(gray_img1, gray_img2, size, 30, 20, cost)
         elif alg == "block":
             disparity_map = get_block_disparity(gray_img1, gray_img2, size)
+        elif alg == "average_block":
+            disparity_map = get_average_block_disparity(gray_img1, gray_img2, size, cost)
         else:
             print("Invalid Algorithm")
             return

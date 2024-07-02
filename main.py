@@ -2,6 +2,7 @@ import cv2 as cv
 import numpy as np
 from matplotlib import pyplot as plt
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import threading
 
 from image_process import *
 from sad_final import *
@@ -34,16 +35,9 @@ normalize_factor = 1
 
 NUM_WORKERS = 5
 
-with ThreadPoolExecutor(max_workers=NUM_WORKERS) as executor:
-    # List of future objects
-    futures = [executor.submit(draw_distance_map, img1, img2, size, normalize_factor, "block", "ssd", True, True) for size in range(3, 15, 2)]
-
-    # As tasks complete, print their result
-    # for future in as_completed(futures):
-    #     result = future.result()
-    #     print(result)
-
-# draw_distance_map(img1, img2, 3, normalize_factor=normalize_factor, cost="ssd", alg="block", write=True, disp=True)
+threads = [threading.Thread(target=draw_distance_map, args=(img1, img2, i, normalize_factor, "average_block", "ssd", True, True)) for i in range(3, 16, 2)]
+for t in threads:
+    t.start()
 
 # Draw the epipolar lines on the right image and the original point on the left image
 # pixel = (100, 250)

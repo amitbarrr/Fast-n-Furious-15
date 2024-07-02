@@ -29,7 +29,7 @@ def sad(point_list: np.array, point: tuple, image1: np.array, image2: np.array, 
         x, y = position[1], position[0]
         # Create new neighborhood
         block2 = image2[y - window_size:y + window_size + 1, x - window_size: x + window_size + 1]
-        sad_val = difference_cost(block1, block2)
+        sad_val = difference_cost(block1, block2, cost)
         sad_lst[i] = np.array([y, x, sad_val])
     sorted_indices = np.argsort(sad_lst[:, 2])
     sad_lst = sad_lst[sorted_indices][:, :-1]
